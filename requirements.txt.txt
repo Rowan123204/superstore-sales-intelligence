@@ -1,0 +1,11 @@
+pandas
+numpy
+matplotlib
+seaborn
+scikit-learn
+imbalanced-learn
+sqlalchemy
+psycopg2-binary
+openpyxl
+jupyter
+python-dotenv
