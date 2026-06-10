@@ -101,25 +101,34 @@ The raw dataset is flattened, so I normalized it into separate tables during ETL
 
 ## ETL Process
 
-I used Python to read the Excel workbook and split the raw data into separate tables.
+I used Python to read the Superstore Excel workbook, normalize the raw data into relational tables, and load the results into PostgreSQL.
+
+To make the project portable and GitHub-friendly, the ETL script uses:
+
+* **Relative file paths** with `pathlib` instead of machine-specific paths
+* **Environment variables** for the database connection instead of hardcoded credentials
+* A `.env` file for local configuration and a `.env.example` template for other users
 
 ### Tables created
-- `products`
-- `customers`
-- `geography`
-- `orders`
-- `order_items`
-- `returns`
-- `people`
+
+* `products`
+* `customers`
+* `geography`
+* `orders`
+* `order_items`
+* `returns`
+* `people`
 
 ### What the ETL did
-- Loaded the raw Excel sheets
-- Selected the relevant columns
-- Removed duplicate records where needed
-- Split the dataset into relational tables
-- Loaded the tables into PostgreSQL
 
-This made it easier to write SQL queries and analyze the data in a more structured way.
+* Loaded the raw Excel workbook from the `data/raw` directory
+* Selected the relevant columns
+* Removed duplicate records where needed
+* Split the dataset into relational tables
+* Loaded the tables into PostgreSQL using SQLAlchemy
+
+This approach keeps the project portable across different machines and avoids exposing sensitive database credentials in the source code.
+
 
 ---
 
@@ -181,6 +190,34 @@ Key visual themes included:
 - Focus on improving profit margin, not just sales growth.
 
 ---
+## Setup
+
+### Database Configuration
+
+This project uses environment variables for the PostgreSQL connection.
+
+Create a `.env` file in the project root:
+
+```env
+DB_URL=postgresql://username:password@localhost:5432/superstore
+```
+
+An example template is provided in `.env.example`.
+
+### Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### Run the ETL Pipeline
+
+```bash
+python scripts/etl.py
+```
+
+The ETL script automatically loads the Excel file from the `data/raw` directory using relative paths, making the project portable across different environments.
+
 
 ## Repository Structure
 
